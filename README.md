@@ -39,6 +39,10 @@ A comprehensive web application for discovering, managing, and sharing audio sam
 - Node.js 18+ and npm
 - Git
 
+### Known Issues
+
+**Prisma Client Import**: Prisma 7 requires a custom output path. After running `npx prisma generate`, you may need to adjust the import in `lib/prisma.ts` to match your generated client location. The current setup generates to `node_modules/.prisma/client`.
+
 ### Installation
 
 1. Clone the repository:
