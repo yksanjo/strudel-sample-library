@@ -2,6 +2,24 @@
 
 A comprehensive web application for discovering, managing, and sharing audio samples for the Strudel live coding community.
 
+## Screenshots
+
+### Home Page - Sample Discovery
+![Home Page](screenshots/home-page.png)
+*Discover and search for audio samples from GitHub repositories and the community*
+
+### Upload Page
+![Upload Page](screenshots/upload-page.png)
+*Upload your own samples with metadata and drag-and-drop interface*
+
+### Sign In Page
+![Sign In Page](screenshots/signin-page.png)
+*Multiple authentication options: Google, GitHub, or email/password*
+
+### Library Page
+![Library Page](screenshots/library-page.png)
+*Manage your favorites and create custom collections*
+
 ## Features
 
 ### Sample Discovery
