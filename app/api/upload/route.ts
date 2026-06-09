@@ -55,16 +55,9 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
     await writeFile(filePath, buffer);
 
-    // Get audio duration (simplified - in production, use proper audio analysis)
-    let duration: number | null = null;
-    try {
-      const audio = new Audio();
-      const audioUrl = `${request.nextUrl.origin}${publicPath}`;
-      // Note: This is a simplified approach. In production, analyze the file server-side
-      duration = null; // Will be set client-side or via background job
-    } catch (error) {
-      console.error('Error getting audio duration:', error);
-    }
+    // Audio duration is not analyzed server-side; it is determined
+    // client-side (or via a background job) after upload.
+    const duration: number | null = null;
 
     // Create sample record
     const sample = await prisma.sample.create({

@@ -1,21 +1,14 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 import { getToken } from 'next-auth/jwt';
 
-// Helper to get session from cookies/headers
+// Helper to get session from request headers
 export async function auth() {
   try {
-    const cookieStore = await cookies();
     const headersList = await headers();
-    
-    // Get the session token from cookies
+
+    // Get the session token; getToken reads the JWT from the cookie header
     const token = await getToken({
-      req: {
-        headers: Object.fromEntries(headersList.entries()),
-        cookies: Object.fromEntries(
-          cookieStore.getAll().map(c => [c.name, c.value])
-        ),
-      } as any,
+      req: { headers: headersList },
       secret: process.env.NEXTAUTH_SECRET,
     });
 
@@ -34,4 +27,3 @@ export async function auth() {
     return null;
   }
 }
-

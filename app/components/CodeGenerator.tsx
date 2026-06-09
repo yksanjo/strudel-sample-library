@@ -9,7 +9,6 @@ interface Sample {
   sourceUrl: string;
   filePath?: string;
   source?: string;
-  [key: string]: any;
 }
 
 interface CodeGeneratorProps {

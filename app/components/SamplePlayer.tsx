@@ -6,10 +6,9 @@ import { formatDuration } from '@/lib/audio-utils';
 interface SamplePlayerProps {
   url: string;
   name: string;
-  autoPlay?: boolean;
 }
 
-export default function SamplePlayer({ url, name, autoPlay = false }: SamplePlayerProps) {
+export default function SamplePlayer({ url, name }: SamplePlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -61,8 +60,6 @@ export default function SamplePlayer({ url, name, autoPlay = false }: SamplePlay
     audio.currentTime = newTime;
     setCurrentTime(newTime);
   };
-
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">

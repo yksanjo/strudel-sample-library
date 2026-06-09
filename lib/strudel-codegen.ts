@@ -10,7 +10,6 @@ interface SampleLike {
  * Generate Strudel code snippet for a single sample
  */
 export function generateStrudelCode(sample: StrudelSample | SampleLike): string {
-  const sampleName = sample.name.replace(/[^a-zA-Z0-9_]/g, '_');
   return `s("${sample.name}").sound("${sample.sourceUrl}")`;
 }
 
@@ -27,7 +26,7 @@ export function generateStrudelCodeForSamples(samples: (StrudelSample | SampleLi
   }
 
   // Generate code for multiple samples
-  const sampleCodes = samples.map((sample, index) => {
+  const sampleCodes = samples.map((sample) => {
     const sampleName = sample.name.replace(/[^a-zA-Z0-9_]/g, '_');
     return `  s("${sampleName}").sound("${sample.sourceUrl}")`;
   });

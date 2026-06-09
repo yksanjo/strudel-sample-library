@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
           'Cache-Control': 'public, max-age=3600',
         },
       });
-    } catch (error) {
+    } catch {
       // If direct fetch fails, return the URL for client-side loading
       return NextResponse.json({ url });
     }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@/lib/generated/prisma/client';
 
 export async function POST(
   request: NextRequest,
@@ -53,8 +54,11 @@ export async function POST(
     });
 
     return NextResponse.json({ item });
-  } catch (error: any) {
-    if (error.code === 'P2002') {
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === 'P2002'
+    ) {
       return NextResponse.json(
         { error: 'Sample already in collection' },
         { status: 409 }

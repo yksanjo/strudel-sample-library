@@ -52,7 +52,7 @@ export default function LibraryManager() {
     try {
       const response = await fetch('/api/library/favorites');
       const data = await response.json();
-      setFavorites(data.favorites?.map((f: any) => f.sample) || []);
+      setFavorites(data.favorites?.map((f: { sample: Sample }) => f.sample) || []);
     } catch (error) {
       console.error('Error loading favorites:', error);
     } finally {
@@ -117,19 +117,6 @@ export default function LibraryManager() {
     }
   };
 
-  const addSampleToCollection = async (collectionId: string, sampleId: string) => {
-    try {
-      await fetch(`/api/library/collections/${collectionId}/items`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sampleId }),
-      });
-      loadCollections();
-    } catch (error) {
-      console.error('Error adding sample to collection:', error);
-    }
-  };
-
   const removeSampleFromCollection = async (collectionId: string, sampleId: string) => {
     try {
       await fetch(`/api/library/collections/${collectionId}/items?sampleId=${sampleId}`, {
@@ -148,10 +135,6 @@ export default function LibraryManager() {
       </div>
     );
   }
-
-  const displaySamples = activeTab === 'favorites' 
-    ? favorites 
-    : selectedCollection?.items.map(item => item.sample) || [];
 
   return (
     <div className="space-y-6">

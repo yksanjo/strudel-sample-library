@@ -60,7 +60,7 @@ export default function SampleBrowser() {
       const response = await fetch('/api/library/favorites');
       const data = await response.json();
       const favoriteIds = new Set<string>(
-        data.favorites?.map((f: any) => f.sampleId as string) || []
+        data.favorites?.map((f: { sampleId: string }) => f.sampleId) || []
       );
       setFavorites(favoriteIds);
     } catch (error) {

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@/lib/generated/prisma/client';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await auth();
     if (!session?.user?.id) {
@@ -77,8 +78,11 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ favorite });
-  } catch (error: any) {
-    if (error.code === 'P2002') {
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === 'P2002'
+    ) {
       // Unique constraint violation - already favorited
       return NextResponse.json(
         { error: 'Sample already in favorites' },

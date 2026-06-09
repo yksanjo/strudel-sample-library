@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { discoverSamplesFromGitHub } from '@/lib/services/github-service';
 import { prisma } from '@/lib/prisma';
+import type { Prisma } from '@/lib/generated/prisma/client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,11 +21,13 @@ export async function GET(request: NextRequest) {
 
     if (source === 'upload' || source === 'all') {
       // Get uploaded samples from database
-      const where: any = { isPublic: true };
+      const where: Prisma.SampleWhereInput = { isPublic: true };
       if (query) {
+        // SQLite `contains` is case-insensitive for ASCII by default; the
+        // `mode: 'insensitive'` option is not supported by the SQLite connector.
         where.OR = [
-          { name: { contains: query, mode: 'insensitive' } },
-          { description: { contains: query, mode: 'insensitive' } },
+          { name: { contains: query } },
+          { description: { contains: query } },
         ];
       }
       if (category) {
@@ -46,7 +49,7 @@ export async function GET(request: NextRequest) {
       });
 
       samples.push(
-        ...dbSamples.map((s: any) => ({
+        ...dbSamples.map((s) => ({
           id: s.id,
           name: s.name,
           description: s.description,

@@ -16,8 +16,16 @@ export interface StrudelSample {
   author?: string;
   category?: string;
   duration?: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
+
+type SampleMetadata = {
+  bpm?: number;
+  key?: string;
+  tags?: string[];
+  category?: string;
+  description?: string;
+};
 
 export interface StrudelJson {
   samples?: Record<string, string | {
@@ -28,7 +36,7 @@ export interface StrudelJson {
     category?: string;
     description?: string;
   }>;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**
@@ -88,7 +96,7 @@ export function extractSamplesFromJson(
   
   Object.entries(strudelJson.samples).forEach(([name, sampleData]) => {
     let src: string;
-    let metadata: any = {};
+    let metadata: SampleMetadata = {};
 
     if (typeof sampleData === 'string') {
       src = sampleData;
