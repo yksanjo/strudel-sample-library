@@ -27,7 +27,7 @@ export const authOptions: NextAuthConfig = {
         // In production, implement proper password hashing and verification
         if (credentials?.email) {
           const user = await prisma.user.findUnique({
-            where: { email: credentials.email },
+            where: { email: credentials.email as string },
           });
 
           if (user) {
